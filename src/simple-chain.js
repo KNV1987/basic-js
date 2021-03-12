@@ -2,21 +2,14 @@ const CustomError = require("../extensions/custom-error");
 
 const chainMaker = {
   str: [],
-  getLength() {
-    return this.str.length;
-  },
   addLink(value) {
-    value = String(value);
     this.str.push(`( ${value} )`);
     return this;
   },
+  getLength() {
+    return this.str.length;
+  },
   removeLink(position) {
-    if (
-      typeof position !== "number" ||
-      position % 10 !== 0 ||
-      !this.str[position]
-    )
-      throw new Error();
     this.str.splice(position - 1, 1);
     return this;
   },
@@ -25,9 +18,9 @@ const chainMaker = {
     return this;
   },
   finishChain() {
-    let res = this.str.join("~~");
-    this.str = [];
-    return res;
+    str = this.str.join("~~");
+    delete this.str;
+    return str;
   },
 };
 
